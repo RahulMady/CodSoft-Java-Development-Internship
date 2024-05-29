@@ -1,0 +1,67 @@
+import java.util.Scanner;
+
+class QuizQuestion {
+    private String question;
+    private String[] options;
+    private int correctOption;
+
+    public QuizQuestion(String question, String[] options, int correctOption) {
+        this.question = question;
+        this.options = options;
+        this.correctOption = correctOption;
+    }
+
+    public boolean isCorrect(int userChoice) {
+        return userChoice == correctOption;
+    }
+}
+
+public class QuizGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Create quiz questions
+        QuizQuestion[] questions = {
+            new QuizQuestion("What is the capital of France?",
+                    new String[]{"A) Paris", "B) London", "C) Berlin", "D) Rome"}, 0),
+            new QuizQuestion("Which planet is known as the Red Planet?",
+                    new String[]{"A) Earth", "B) Mars", "C) Venus", "D) Jupiter"}, 1),
+            // Add more questions here
+        };
+
+        int totalQuestions = questions.length;
+        int score = 0;
+
+        System.out.println("Welcome to the Quiz Game!");
+        System.out.println("You'll be presented with " + totalQuestions + " questions.");
+        System.out.println("Choose the correct option (A, B, C, or D).");
+
+        for (int i = 0; i < totalQuestions; i++) {
+            QuizQuestion currentQuestion = questions[i];
+            System.out.println("\nQuestion " + (i + 1) + ":");
+            System.out.println(currentQuestion.question);
+            for (String option : currentQuestion.options) {
+                System.out.println(option);
+            }
+
+            System.out.print("Your choice (A/B/C/D): ");
+            char userChoice = scanner.next().toUpperCase().charAt(0);
+
+            int optionIndex = userChoice - 'A';
+            if (optionIndex >= 0 && optionIndex < currentQuestion.options.length) {
+                if (currentQuestion.isCorrect(optionIndex)) {
+                    System.out.println("Correct!");
+                    score++;
+                } else {
+                    System.out.println("Incorrect. The correct answer was: " +
+                            currentQuestion.options[currentQuestion.correctOption]);
+                }
+            } else {
+                System.out.println("Invalid choice. Skipping to the next question.");
+            }
+        }
+
+        System.out.println("\nQuiz completed!");
+        System.out.println("Your final score: " + score + "/" + totalQuestions);
+    }
+}
