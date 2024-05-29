@@ -1,6 +1,4 @@
-Certainly! Below is a Java program that implements the number guessing game according to the instructions you provided. I've included comments to explain each step. Feel free to modify or enhance it as needed:
 
-```java
 import java.util.Scanner;
 import java.util.Random;
 
