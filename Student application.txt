@@ -1,0 +1,89 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Course {
+    private String courseCode;
+    private String title;
+    private String description;
+    private int capacity;
+    private int enrolledStudents;
+
+    public Course(String courseCode, String title, String description, int capacity) {
+        this.courseCode = courseCode;
+        this.title = title;
+        this.description = description;
+        this.capacity = capacity;
+        this.enrolledStudents = 0;
+    }
+
+    public boolean enrollStudent() {
+        if (enrolledStudents < capacity) {
+            enrolledStudents++;
+            return true;
+        } else {
+            System.out.println("Course is full. Cannot enroll more students.");
+            return false;
+        }
+    }
+
+    public void dropStudent() {
+        if (enrolledStudents > 0) {
+            enrolledStudents--;
+        }
+    }
+
+    public String getCourseInfo() {
+        return courseCode + " - " + title + " (" + enrolledStudents + "/" + capacity + ")";
+    }
+}
+
+class Student {
+    private int studentId;
+    private String name;
+    private List<Course> registeredCourses;
+
+    public Student(int studentId, String name) {
+        this.studentId = studentId;
+        this.name = name;
+        this.registeredCourses = new ArrayList<>();
+    }
+
+    public void registerCourse(Course course) {
+        if (course.enrollStudent()) {
+            registeredCourses.add(course);
+            System.out.println("Registered for course: " + course.getCourseInfo());
+        }
+    }
+
+    public void dropCourse(Course course) {
+        course.dropStudent();
+        registeredCourses.remove(course);
+        System.out.println("Dropped course: " + course.getCourseInfo());
+    }
+}
+
+public class CourseRegistrationSystem {
+    public static void main(String[] args) {
+        // Create sample courses
+        Course math101 = new Course("MATH101", "Introduction to Calculus", "Basic calculus concepts", 30);
+        Course cs202 = new Course("CS202", "Data Structures", "Learn about data structures", 25);
+
+        // Create sample students
+        Student student1 = new Student(1001, "Alice");
+        Student student2 = new Student(1002, "Bob");
+
+        // Register students for courses
+        student1.registerCourse(math101);
+        student1.registerCourse(cs202);
+        student2.registerCourse(cs202);
+
+        // Drop a course
+        student1.dropCourse(cs202);
+
+        // Display course information
+        System.out.println("\nCourse Listing:");
+        System.out.println(math101.getCourseInfo());
+        System.out.println(cs202.getCourseInfo());
+    }
+}
